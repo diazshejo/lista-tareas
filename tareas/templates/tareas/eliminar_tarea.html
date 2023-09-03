@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eliminar Tarea</title>
+    <style>
+        /* Estilos para la página de eliminación (mantén los estilos previos) */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        p {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="submit"] {
+            background-color: #DC3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #C82333;
+        }
+
+        a {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Eliminar Tarea</h1>
+    <p>¿Estás seguro de que deseas eliminar esta tarea?</p>
+    <p>{{ tarea.descripcion }} ({{ tarea.tipo_tarea }} - {{ tarea.status }})</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirmar Eliminación">
+    </form>
+    <a href="{% url 'lista_tareas' %}">Cancelar</a>
+</body>
+</html>

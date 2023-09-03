@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Tarea</title>
+    <style>
+        /* Estilos para el formulario (mantén los estilos previos) */
+        /* ... (estilos previos) ... */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        select,
+        input[type="date"] {  /* Agrega input[type="date"] para el campo de fecha */
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Editar Tarea</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="descripcion">Descripción:</label>
+        <input type="text" name="descripcion" value="{{ tarea.descripcion }}" required maxlength="256"><br><br>
+        <label for="tipo_tarea">Tipo de Tarea:</label>
+        <select name="tipo_tarea" required>
+            <option value="Hogar" {% if tarea.tipo_tarea == 'Hogar' %}selected{% endif %}>Hogar</option>
+            <option value="Estudiantil" {% if tarea.tipo_tarea == 'Estudiantil' %}selected{% endif %}>Estudiantil</option>
+            <option value="Laboral" {% if tarea.tipo_tarea == 'Laboral' %}selected{% endif %}>Laboral</option>
+            <option value="Otras" {% if tarea.tipo_tarea == 'Otras' %}selected{% endif %}>Otras</option>
+        </select><br><br>
+        <label for="status">Status:</label>
+        <select name="status" required>
+            <option value="Culminada" {% if tarea.status == 'Culminada' %}selected{% endif %}>Culminada</option>
+            <option value="Cancelada" {% if tarea.status == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+            <option value="Proceso" {% if tarea.status == 'Proceso' %}selected{% endif %}>Proceso</option>
+        </select><br><br>
+        <label for="fecha">Fecha:</label> <!-- Campo de fecha -->
+        <input type="date" name="fecha" value="{{ tarea.fecha|date:'Y-m-d' }}" required><br><br> <!-- Campo de fecha -->
+        <input type="submit" value="Guardar Cambios">
+    </form>
+    <a href="{% url 'lista_tareas' %}">Volver a la Lista de Tareas</a>
+</body>
+</html>

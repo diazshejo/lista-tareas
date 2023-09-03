@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Tareas</title>
+    <style>
+        /* Agrega tus estilos CSS aquí */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 2px 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 2px;
+        }
+
+        /* Establece colores según el status */
+        td[data-status="Culminada"] {
+            background-color: #28a745; /* Verde */
+            color: white;
+        }
+
+        td[data-status="Cancelada"] {
+            background-color: #dc3545; /* Roja */
+            color: white;
+        }
+
+        td[data-status="Proceso"] {
+            background-color: #ffc107; /* Naranja */
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tareas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Tipo de Tarea</th>
+                <th>Status</th>
+                <th>Fecha</th> <!-- Agregar la columna para la fecha -->
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tarea in tareas %}
+                <tr>
+                    <td>{{ tarea.descripcion }}</td>
+                    <td>{{ tarea.tipo_tarea }}</td>
+                    <td data-status="{{ tarea.status }}">{{ tarea.status }}</td>
+                    <td>{{ tarea.fecha|date:"Y-m-d" }}</td> <!-- Mostrar la fecha en el formato deseado -->
+                    <td class="actions">
+                        <a href="{% url 'editar_tarea' tarea.id %}">Editar</a>
+                        <a href="{% url 'eliminar_tarea' tarea.id %}">Eliminar</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No hay tareas disponibles.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'crear_tarea' %}">Crear Nueva Tarea</a>
+</body>
+</html>
